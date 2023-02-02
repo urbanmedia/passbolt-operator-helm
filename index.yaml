@@ -1,0 +1,31 @@
+apiVersion: v1
+entries:
+  passbolt-operator:
+  - annotations:
+      artifacthub.io/changes: |-
+        - kind: added
+          description: "Added Helm chart for Passbolt Operator"
+    apiVersion: v2
+    appVersion: v1.0.0
+    created: "2023-02-02T08:41:55.08332271Z"
+    description: A Helm chart for Kubernetes
+    digest: 55616fbeecabac76d63ccce595647a794a66326b9b4b135bedce5edfeed4e09e
+    home: https://github.com/urbanmedia/passbolt-operator
+    keywords:
+    - passbolt
+    - operator
+    - passbolt-operator
+    - secrets
+    - password
+    maintainers:
+    - email: leonsteinhaeuser@gmail.com
+      name: leonsteinhaeuser
+      url: https://github.com/leonsteinhaeuser
+    name: passbolt-operator
+    sources:
+    - https://github.com/urbanmedia/passbolt-operator
+    type: application
+    urls:
+    - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-operator-0.1.0/passbolt-operator-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-02-02T08:41:55.08333001Z"
