@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - charts/passbolt-operator/Chart.yaml
+      - charts/passbolt-secret/Chart.yaml
+      - .github/workflows/chart_release.yaml
 
 jobs:
   release:
