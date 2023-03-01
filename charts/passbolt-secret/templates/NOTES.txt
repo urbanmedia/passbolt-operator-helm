@@ -1,0 +1,2 @@
+1. The secret has been successfully created.
+2. You can now reference the Kubernetes secret in your application by it's name: "{{ include "passbolt-secret.fullname" . }}"
