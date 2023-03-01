@@ -11,13 +11,13 @@ fullnameOverride: ""
 # passbolt secret is deleted.
 leaveOnDelete: false
 
-secrets:
-  - # kubernetesSecretKey is the name of the secret key to be created in Kubernetes secrets resource
-    kubernetesSecretKey: ""
-    # passboltSecret represents the passbolt secret to be referenced in the passbolt instance
-    passboltSecret:
-      # name is the name of the passbolt secret to be referenced
-      name: ""
-      # field is the name of the passbolt secret field to be referenced
-      # valid values are: "username", "password", "uri"
-      field: ""
+secrets: []
+  # - # kubernetesSecretKey is the name of the secret key to be created in Kubernetes secrets resource
+  #   kubernetesSecretKey: ""
+  #   # passboltSecret represents the passbolt secret to be referenced in the passbolt instance
+  #   passboltSecret:
+  #     # name is the name of the passbolt secret to be referenced
+  #     name: ""
+  #     # field is the name of the passbolt secret field to be referenced
+  #     # valid values are: "username", "password", "uri"
+  #     field: ""
