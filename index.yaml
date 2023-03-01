@@ -28,4 +28,15 @@ entries:
     urls:
     - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-operator-0.1.0/passbolt-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-02T08:41:55.08333001Z"
+  passbolt-secret:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-01T18:06:04.982035824Z"
+    description: A Helm chart for Kubernetes
+    digest: 96f1d6baa20964571f5174db1e353ecb7dc0526692eafd16123ac8444dab0c2f
+    name: passbolt-secret
+    type: application
+    urls:
+    - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-secret-0.1.0/passbolt-secret-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-03-01T18:06:04.982039924Z"
