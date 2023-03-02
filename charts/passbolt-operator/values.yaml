@@ -85,6 +85,14 @@ monitoring:
   enabled: false
   # -- RBAC Proxy configuration
   rbacProxy:
+    # -- Image to use for the RBAC Proxy
+    image:
+      # -- Image repository
+      repository: gcr.io/kubebuilder/kube-rbac-proxy
+      # -- Image pull policy
+      pullPolicy: IfNotPresent
+      # -- Tag overrides the image tag whose default is the chart appVersion.
+      tag: "v0.13.0"
     # -- RBAC Proxy resource configuration
     resources: {}
       # limits:
