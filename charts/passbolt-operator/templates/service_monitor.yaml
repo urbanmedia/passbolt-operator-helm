@@ -1,18 +1,18 @@
-{{- if and .Values.monitoring.enabled .Values.monitoring.ServiceMonitor.enabled }}
+{{- if and .Values.monitoring.enabled .Values.monitoring.serviceMonitor.enabled }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "passbolt-operator.fullname" . }}
-  {{- if .Values.monitoring.ServiceMonitor.namespace }}
-  namespace: {{ .Values.monitoring.ServiceMonitor.namespace }}
+  {{- if .Values.monitoring.serviceMonitor.namespace }}
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace }}
   {{- end }}
   labels:
     {{- include "passbolt-operator.labels" . | nindent 4 }}
 spec:
   endpoints:
     - path: /metrics
-      port: https
+      port: metrics
       scheme: https
       bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
       tlsConfig:

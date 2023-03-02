@@ -28,7 +28,28 @@ spec:
       serviceAccountName: {{ include "passbolt-operator.serviceAccountName" . }}
       terminationGracePeriodSeconds: 10
       containers:
-        - name: {{ .Chart.Name }}
+        {{- if .Values.monitoring.enabled }}
+        - name: kube-rbac-proxy
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "ALL"
+          image: {{ .Values.monitoring.rbacProxy.image.repository }}:{{ .Values.monitoring.rbacProxy.image.tag }}
+          imagePullPolicy: {{ .Values.monitoring.rbacProxy.image.pullPolicy }}
+          args:
+          - "--secure-listen-address=0.0.0.0:8443"
+          - "--upstream=http://127.0.0.1:8080/"
+          - "--logtostderr=true"
+          - "--v=0"
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+            name: metrics
+          resources:
+            {{- toYaml .Values.monitoring.rbacProxy.resources | nindent 12 }}
+        {{- end }}
+        - name: manager
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -39,7 +60,11 @@ spec:
           command:
           - /controller
           args:
-          - --leader-elect
+          - "--health-probe-bind-address=:8081"
+          {{- if .Values.monitoring.enabled }}
+          - "--metrics-bind-address=127.0.0.1:8080"
+          {{- end }}
+          - "--leader-elect"
           env:
           {{- if .Values.secret.name }}
             - name: PASSBOLT_URL
@@ -74,10 +99,6 @@ spec:
                   name: {{ include "passbolt-operator.secret.name" . }}
                   key: gpg_key
           {{- end }}
-          ports:
-            - name: http
-              containerPort: 8081
-              protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
