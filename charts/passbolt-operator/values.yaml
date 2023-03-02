@@ -83,6 +83,16 @@ affinity: {}
 monitoring:
   # -- Enable Prometheus Operator Monitoring
   enabled: false
+  # -- RBAC Proxy configuration
+  rbacProxy:
+    # -- RBAC Proxy resource configuration
+    resources: {}
+      # limits:
+      #   cpu: 500m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 5m
+      #   memory: 64Mi
   # -- ServiceMonitor configuration
   serviceMonitor:
     # -- Enable ServiceMonitor
