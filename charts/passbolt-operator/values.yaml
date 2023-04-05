@@ -55,6 +55,17 @@ resources:
     cpu: 10m
     memory: 64Mi
 
+# -- rbac proxy configuration
+rbacProxy:
+  # -- resource configuration
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 5m
+      memory: 64Mi
+
 # -- Node selector to use for the deployment
 nodeSelector: {}
 
