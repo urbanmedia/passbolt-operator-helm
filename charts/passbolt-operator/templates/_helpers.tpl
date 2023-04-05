@@ -81,3 +81,66 @@ Create the name of the service account to use
 {{- printf "%s-" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name for the metrics service
+*/}}
+{{- define "passbolt-operator.service.metrics.name" -}}
+{{- printf "%s-metrics" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the certificate issuer
+*/}}
+{{- define "passbolt-operator.certificate.issuer.name" -}}
+{{- printf "%s-selfsigned" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the certificate
+*/}}
+{{- define "passbolt-operator.certificate.name" -}}
+{{- printf "%s-selfsigned" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the certificate
+*/}}
+{{- define "passbolt-operator.namespaced-certificate.name" -}}
+{{- printf "%s/%s" .Release.Namespace (include "passbolt-operator.service.webhook.name" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the certificate secret
+*/}}
+{{- define "passbolt-operator.certificate.secret.name" -}}
+{{- printf "%s-selfsigned" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the webhook service
+*/}}
+{{- define "passbolt-operator.service.webhook.name" -}}
+{{- printf "%s-webhook" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the mutation webhook
+*/}}
+{{- define "passbolt-operator.webhook.mutation.name" -}}
+{{- printf "%s-mutation" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the validation webhook
+*/}}
+{{- define "passbolt-operator.webhook.validation.name" -}}
+{{- printf "%s-validation" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the name for the proxy cluster role
+*/}}
+{{- define "passbolt-operator.cluster-role.proxy.name" -}}
+{{- printf "%s-proxy" (include "passbolt-operator.fullname" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
