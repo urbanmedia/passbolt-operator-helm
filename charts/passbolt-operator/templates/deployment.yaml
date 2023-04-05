@@ -28,6 +28,24 @@ spec:
       serviceAccountName: {{ include "passbolt-operator.serviceAccountName" . }}
       terminationGracePeriodSeconds: 10
       containers:
+        - args:
+          - --secure-listen-address=0.0.0.0:8443
+          - --upstream=http://127.0.0.1:8080/
+          - --logtostderr=true
+          - --v=0
+          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+          name: kube-rbac-proxy
+          ports:
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          resources:
+            {{- toYaml .Values.rbacProxy.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
         - name: {{ .Chart.Name }}
           securityContext:
             allowPrivilegeEscalation: false
@@ -39,6 +57,8 @@ spec:
           command:
           - /controller
           args:
+          - --health-probe-bind-address=:8081
+          - --metrics-bind-address=127.0.0.1:8080
           - --leader-elect
           env:
           {{- if .Values.secret.name }}
@@ -75,8 +95,8 @@ spec:
                   key: gpg_key
           {{- end }}
           ports:
-            - name: http
-              containerPort: 8081
+            - name: webhook-server
+              containerPort: 9443
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -92,6 +112,10 @@ spec:
             periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /tmp/k8s-webhook-server/serving-certs
+            name: cert
+            readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -104,3 +128,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: {{ include "passbolt-operator.certificate.secret.name" . }}
