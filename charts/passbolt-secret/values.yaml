@@ -19,21 +19,22 @@ secretType: Opaque
 # This option is only used when the secretType is set to "kubernetes.io/dockerconfigjson"
 passboltSecretName: ""
 
+# -- A list of secrets to be referenced in the passbolt instance
 secrets: []
-  # - # -- kubernetesSecretKey is the name of the secret key to be created in Kubernetes secrets resource
-  #   kubernetesSecretKey: ""
-  #   # -- passboltSecret represents the passbolt secret to be referenced in the passbolt instance
+      # secrets[*].kubernetesSecretKey -- kubernetesSecretKey is the name of the secret key to be created in Kubernetes secrets resource
+  # - kubernetesSecretKey: ""
+      # secrets[*].passboltSecret -- passboltSecret represents the passbolt secret to be referenced in the passbolt instance
   #   passboltSecret:
-  #     # -- name is the name of the passbolt secret to be referenced
+        # secrets[*].passboltSecret.name -- name is the name of the passbolt secret to be referenced
   #     name: ""
-  #     # -- field is the name of the passbolt secret field to be referenced
-  #     # valid values are: "username", "password", "uri"
+        # secrets[*].passboltSecret.field -- field is the name of the passbolt secret field to be referenced
+        # valid values are: "username", "password", "uri"
   #     field: ""
-  #     # -- value is the plain text value of the secret.
-  #     # This field allows to set a static value or using go templating to generate the value.
-  #     # Valid template variables are:
-  #     #   - Password
-  #     #   - Username
-  #     #   - URI
-  #     # Example: "postgresql://{{ .Username }}:{{ .Password }}@{{ .URI }}"
+        # secrets[*].passboltSecret.value -- value is the plain text value of the secret.
+        # This field allows to set a static value or using go templating to generate the value.
+        # Valid template variables are:
+        #   - Password
+        #   - Username
+        #   - URI
+        # Example: "postgresql://{{ .Username }}:{{ .Password }}@{{ .URI }}"
   #     value: ""
