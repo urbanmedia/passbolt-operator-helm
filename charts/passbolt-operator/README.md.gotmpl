@@ -38,6 +38,17 @@ helm install \
   -n passbolt-operator-system
 ```
 
+### Upgrading from previous major version
+
+Since the operator is installed along with the CRDs, you need to force the upgrade to ensure the CRDs are updated:
+
+```bash
+helm upgrade \
+  passbolt-operator passbolt-operator/passbolt-operator \
+  -n passbolt-operator-system \
+  --force
+```
+
 ## Maintainers
 
 {{ template "chart.maintainersTable" . }}
