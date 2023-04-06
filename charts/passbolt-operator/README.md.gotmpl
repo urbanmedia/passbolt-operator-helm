@@ -1,0 +1,53 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+## Installation
+
+### Add Helm repository
+
+```bash
+helm repo add passbolt-operator https://urbanmedia.github.io/passbolt-operator-helm
+```
+
+### Install the operator
+
+First, create the namespace where the operator will be installed:
+
+```bash
+kubectl create namespace passbolt-operator-system
+```
+
+Then, create the secret containing the Passbolt API credentials:
+
+```bash
+kubectl create secret generic controller-passbolt-secret \
+  --from-file=gpg_key='/path/to/gpg.key' \
+  --from-literal=password='<my-user-password>' \
+  --from-literal=url='<my-passbolt-url>' \
+  --namespace system
+```
+
+Finally, install the operator:
+
+```bash
+helm install \
+  passbolt-operator passbolt-operator/passbolt-operator \
+  -n passbolt-operator-system
+```
+
+## Maintainers
+
+{{ template "chart.maintainersTable" . }}
+
+## Requirements
+
+{{ template "chart.requirementsTable" . }}
+
+## Values
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
