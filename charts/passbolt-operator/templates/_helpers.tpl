@@ -107,7 +107,7 @@ Create the name for the certificate
 Create the name for the certificate
 */}}
 {{- define "passbolt-operator.namespaced-certificate.name" -}}
-{{- printf "%s/%s" .Release.Namespace (include "passbolt-operator.service.webhook.name" .) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s/%s" .Release.Namespace (include "passbolt-operator.certificate.name" . ) | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
