@@ -35,7 +35,7 @@ spec:
         - --leader-elect
         command:
         - /controller
-        image: tagesspiegel/passbolt-operator:latest
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
