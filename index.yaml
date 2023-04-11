@@ -59,6 +59,29 @@ entries:
     version: 0.1.0
   passbolt-secret:
   - apiVersion: v2
+    appVersion: v1.1.0
+    created: "2023-04-11T16:46:15.17109402Z"
+    description: A Helm chart for setting up a passbolt secret in Kubernetes
+    digest: 4d7e6f014bb41dae05b703dd2262bcf4daaa1444c67d0d999a3008cc12643462
+    home: https://github.com/urbanmedia/passbolt-operator
+    keywords:
+    - passbolt
+    - operator
+    - passbolt-operator
+    - secrets
+    - password
+    maintainers:
+    - email: leonsteinhaeuser@gmail.com
+      name: leonsteinhaeuser
+      url: https://github.com/leonsteinhaeuser
+    name: passbolt-secret
+    sources:
+    - https://github.com/urbanmedia/passbolt-operator
+    type: application
+    urls:
+    - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-secret-1.1.0/passbolt-secret-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-01T18:06:04.982035824Z"
     description: A Helm chart for Kubernetes
@@ -68,4 +91,4 @@ entries:
     urls:
     - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-secret-0.1.0/passbolt-secret-0.1.0.tgz
     version: 0.1.0
-generated: "2023-04-11T16:23:08.271100951Z"
+generated: "2023-04-11T16:46:15.17112002Z"
