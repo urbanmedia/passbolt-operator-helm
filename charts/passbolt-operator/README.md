@@ -1,10 +1,53 @@
 # passbolt-operator
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.1.0](https://img.shields.io/badge/AppVersion-v1.1.0-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A Helm chart to deploy the Passbolt Operator. The Passbolt Operator is a Kubernetes Operator to manage Passbolt Secrets in Kubernetes (Passbolt --> Kubernetes secret).
 
-**Homepage:** <https://github.com/urbanmedia/passbolt-operator>
+## Installation
+
+### Add Helm repository
+
+```bash
+helm repo add passbolt-operator https://urbanmedia.github.io/passbolt-operator-helm
+```
+
+### Install the operator
+
+First, create the namespace where the operator will be installed:
+
+```bash
+kubectl create namespace passbolt-operator-system
+```
+
+Then, create the secret containing the Passbolt API credentials:
+
+```bash
+kubectl create secret generic controller-passbolt-secret \
+  --from-file=gpg_key='/path/to/gpg.key' \
+  --from-literal=password='<my-user-password>' \
+  --from-literal=url='<my-passbolt-url>' \
+  --namespace system
+```
+
+Finally, install the operator:
+
+```bash
+helm install \
+  passbolt-operator passbolt-operator/passbolt-operator \
+  -n passbolt-operator-system
+```
+
+### Upgrading from previous major version
+
+Since the operator is installed along with the CRDs, you need to force the upgrade to ensure the CRDs are updated:
+
+```bash
+helm upgrade \
+  passbolt-operator passbolt-operator/passbolt-operator \
+  -n passbolt-operator-system \
+  --force
+```
 
 ## Maintainers
 
@@ -12,9 +55,12 @@ A Helm chart for Kubernetes
 | ---- | ------ | --- |
 | leonsteinhaeuser | <leonsteinhaeuser@gmail.com> | <https://github.com/leonsteinhaeuser> |
 
-## Source Code
+## Requirements
 
-* <https://github.com/urbanmedia/passbolt-operator>
+| Repository | Name | Version |
+|------------|------|---------|
+
+## Values
 
 ## Values
 
@@ -22,10 +68,6 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity to use for the deployment |
 | fullnameOverride | string | `""` | Full name to use for the deployment |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"tagesspiegel/passbolt-operator","tag":""}` | Image to use for the operator |
-| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| image.repository | string | `"tagesspiegel/passbolt-operator"` | Image repository |
-| image.tag | string | `""` | Tag overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | monitoring | object | `{"enabled":false,"serviceMonitor":{"enabled":false,"namespace":""}}` | Monitoring configuration |
 | monitoring.enabled | bool | `false` | Enable Prometheus Operator Monitoring |
@@ -35,10 +77,12 @@ A Helm chart for Kubernetes
 | nameOverride | string | `""` | Name to use for the deployment |
 | nodeSelector | object | `{}` | Node selector to use for the deployment |
 | podAnnotations | object | `{}` | Pod annotations to add to the deployment |
+| rbacProxy | object | `{"resources":{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"5m","memory":"64Mi"}}}` | rbac proxy configuration |
+| rbacProxy.resources | object | `{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"5m","memory":"64Mi"}}` | resource configuration |
 | replicaCount | int | `1` | Replicas count |
-| resources | object | `{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}}` | Pod resource configuration |
-| secret | object | `{"name":"controller-passbolt-secret","passbolt":{"gpgKey":"","password":"","url":""}}` | Secret configuration to authenticate with the Passbolt API |
-| secret.name | string | `"controller-passbolt-secret"` | Name of the secret to use If not set, we expect the user to pass in the credentials via the values file |
+| resources | object | `{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}}` | Controller container resource configuration |
+| secret | object | `{"name":"","passbolt":{"gpgKey":"","password":"","url":""}}` | Secret configuration to authenticate with the Passbolt API |
+| secret.name | string | `""` | Name of the secret to use If not set, we expect the user to pass in the credentials via the values file |
 | secret.passbolt | object | `{"gpgKey":"","password":"","url":""}` | The passbolt API authentication configuration |
 | secret.passbolt.gpgKey | string | `""` | The passbolt API User GPG key |
 | secret.passbolt.password | string | `""` | The passbolt API User passphrase |
