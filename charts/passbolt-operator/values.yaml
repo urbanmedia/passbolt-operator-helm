@@ -6,6 +6,7 @@
 replicaCount: 1
 
 # -- Image to use for the operator
+# @ignore
 image:
   # -- Image repository
   repository: tagesspiegel/passbolt-operator
@@ -36,7 +37,7 @@ podAnnotations: {}
 secret:
   # -- Name of the secret to use
   # If not set, we expect the user to pass in the credentials via the values file
-  name: "controller-passbolt-secret"
+  name: ""
   # -- The passbolt API authentication configuration
   passbolt:
     # -- The passbolt API User GPG key
@@ -46,7 +47,7 @@ secret:
     # -- The passbolt API URL
     url: ""
 
-# -- Pod resource configuration
+# -- Controller container resource configuration
 resources:
   limits:
     cpu: 500m
@@ -54,6 +55,17 @@ resources:
   requests:
     cpu: 10m
     memory: 64Mi
+
+# -- rbac proxy configuration
+rbacProxy:
+  # -- resource configuration
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 5m
+      memory: 64Mi
 
 # -- Node selector to use for the deployment
 nodeSelector: {}
