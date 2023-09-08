@@ -58,11 +58,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-          - "--health-probe-bind-address=:8081"
-          {{- if .Values.monitoring.enabled }}
-          - "--metrics-bind-address=127.0.0.1:8080"
-          {{- end }}
-          - "--leader-elect"
+            - "--health-probe-bind-address=:8081"
+            {{- if .Values.monitoring.enabled }}
+            - "--metrics-bind-address=127.0.0.1:8080"
+            {{- end }}
+            - "--leader-elect"
           env:
             - name: PASSBOLT_URL
               valueFrom:
@@ -93,10 +93,10 @@ spec:
             periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        volumeMounts:
-        - mountPath: /tmp/k8s-webhook-server/serving-certs
-          name: cert
-          readOnly: true
+          volumeMounts:
+            - mountPath: /tmp/k8s-webhook-server/serving-certs
+              name: cert
+              readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -110,7 +110,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - name: cert
-        secret:
-          defaultMode: 420
-          secretName: {{ include "passbolt-operator.certificate.secret.name" . }}
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: {{ include "passbolt-operator.certificate.secret.name" . }}
