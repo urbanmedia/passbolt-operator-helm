@@ -34,7 +34,7 @@ keywords:
   - secrets
   - password
 
-maintainers: # (optional)
+maintainers:
   - name: leonsteinhaeuser
     email: leonsteinhaeuser@gmail.com
     url: https://github.com/leonsteinhaeuser
