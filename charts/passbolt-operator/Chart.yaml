@@ -38,8 +38,3 @@ maintainers:
   - name: leonsteinhaeuser
     email: leonsteinhaeuser@gmail.com
     url: https://github.com/leonsteinhaeuser
-
-annotations:
-  artifacthub.io/changes: |
-    - kind: added
-      description: "Added Helm chart for Passbolt Operator"
