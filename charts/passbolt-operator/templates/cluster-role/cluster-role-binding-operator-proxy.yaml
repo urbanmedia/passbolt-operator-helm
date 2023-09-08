@@ -2,12 +2,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
+    app.kubernetes.io/component: kube-rbac-proxy
     {{- include "passbolt-operator.labels" . | nindent 4 }}
-  name: {{ include "passbolt-operator.rolebinding.manager" . }}
+  name: {{ include "passbolt-operator.fullname" . }}-proxy
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "passbolt-operator.role.manager" . }}
+  name: {{ include "passbolt-operator.cluster-role.proxy.name" . }}
 subjects:
 - kind: ServiceAccount
   name: {{ include "passbolt-operator.serviceAccountName" . }}

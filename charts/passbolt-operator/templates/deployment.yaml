@@ -57,8 +57,6 @@ spec:
                 - "ALL"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-          - /controller
           args:
           - "--health-probe-bind-address=:8081"
           {{- if .Values.monitoring.enabled }}
@@ -66,7 +64,6 @@ spec:
           {{- end }}
           - "--leader-elect"
           env:
-          {{- if .Values.secret.name }}
             - name: PASSBOLT_URL
               valueFrom:
                 secretKeyRef:
@@ -82,23 +79,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "passbolt-operator.secret.name" . }}
                   key: gpg_key
-          {{- else }}
-            - name: PASSBOLT_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "passbolt-operator.secret.name" . }}
-                  key: url
-            - name: PASSBOLT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "passbolt-operator.secret.name" . }}
-                  key: password
-            - name: PASSBOLT_GPG
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "passbolt-operator.secret.name" . }}
-                  key: gpg_key
-          {{- end }}
           livenessProbe:
             httpGet:
               path: /healthz
@@ -113,6 +93,10 @@ spec:
             periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -125,3 +109,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: {{ include "passbolt-operator.certificate.secret.name" . }}

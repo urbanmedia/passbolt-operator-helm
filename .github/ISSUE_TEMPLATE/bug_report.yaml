@@ -1,0 +1,69 @@
+name: Bug report
+description: Create a report to help us improve
+title: "[BUG]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: dropdown
+    id: chart
+    attributes:
+      label: Chart
+      description: Which chart is affected?
+      options:
+        - passbolt-operator
+        - passbolt-secret
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Chart version
+      description: What version of the chart are you using?
+      placeholder: v1.1.0
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: false
+  - type: textarea
+    id: values-file
+    attributes:
+      label: Values file
+      description: Please copy and paste the values file you used to install the chart.
+      render: YAML
+    validations:
+      required: false
+  - type: textarea
+    id: to-reproduce
+    attributes:
+      label: Steps To Reproduce
+      description: "Steps to reproduce the behavior:"
+      placeholder: |
+        1. helm install passbolt-operator passbolt/passbolt-operator -f values.yaml
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "Additional context:"
+      description: Add any other context about the problem here.

@@ -1,0 +1,33 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+## Installation
+
+### Add Helm repository
+
+```bash
+helm repo add passbolt-operator https://urbanmedia.github.io/passbolt-operator-helm
+```
+
+### Add a secret
+
+```bash
+helm install \
+  my-secret passbolt-operator/passbolt-secret \
+  -f values.yaml
+```
+
+## Maintainers
+
+{{ template "chart.maintainersTable" . }}
+
+## Requirements
+
+{{ template "chart.requirementsTable" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
