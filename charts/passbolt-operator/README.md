@@ -1,6 +1,6 @@
 # passbolt-operator
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.1.0](https://img.shields.io/badge/AppVersion-v1.1.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.1.0](https://img.shields.io/badge/AppVersion-v1.1.0-informational?style=flat-square)
 
 A Helm chart to deploy the Passbolt Operator. The Passbolt Operator is a Kubernetes Operator to manage Passbolt Secrets in Kubernetes (Passbolt --> Kubernetes secret).
 
@@ -69,8 +69,14 @@ helm upgrade \
 | affinity | object | `{}` | Affinity to use for the deployment |
 | fullnameOverride | string | `""` | Full name to use for the deployment |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| monitoring | object | `{"enabled":false,"serviceMonitor":{"enabled":false,"namespace":""}}` | Monitoring configuration |
+| monitoring | object | `{"enabled":false,"rbacProxy":{"image":{"pullPolicy":"IfNotPresent","repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.0"},"resources":{}},"serviceMonitor":{"enabled":false,"namespace":""}}` | Monitoring configuration |
 | monitoring.enabled | bool | `false` | Enable Prometheus Operator Monitoring |
+| monitoring.rbacProxy | object | `{"image":{"pullPolicy":"IfNotPresent","repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.0"},"resources":{}}` | RBAC Proxy configuration |
+| monitoring.rbacProxy.image | object | `{"pullPolicy":"IfNotPresent","repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.0"}` | Image to use for the RBAC Proxy |
+| monitoring.rbacProxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| monitoring.rbacProxy.image.repository | string | `"gcr.io/kubebuilder/kube-rbac-proxy"` | Image repository |
+| monitoring.rbacProxy.image.tag | string | `"v0.13.0"` | Tag overrides the image tag whose default is the chart appVersion. |
+| monitoring.rbacProxy.resources | object | `{}` | RBAC Proxy resource configuration |
 | monitoring.serviceMonitor | object | `{"enabled":false,"namespace":""}` | ServiceMonitor configuration |
 | monitoring.serviceMonitor.enabled | bool | `false` | Enable ServiceMonitor |
 | monitoring.serviceMonitor.namespace | string | `""` | Service Monitor namespace |
