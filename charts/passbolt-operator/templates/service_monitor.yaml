@@ -19,5 +19,6 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels:
-      {{- include "passbolt-operator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: kube-rbac-proxy
+      {{- include "passbolt-operator.labels" . | nindent 6 }}
 {{- end }}
