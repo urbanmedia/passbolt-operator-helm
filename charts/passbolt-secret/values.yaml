@@ -15,26 +15,22 @@ leaveOnDelete: false
 # Valid values are: "Opaque", "kubernetes.io/dockerconfigjson"
 secretType: Opaque
 
-# -- The name of the Passbolt secret to be referenced
+# -- The ID of the Passbolt secret to be referenced
 # This option is only used when the secretType is set to "kubernetes.io/dockerconfigjson"
-passboltSecretName: ""
+passboltSecretID: ""
 
 # -- A list of secrets to be referenced in the passbolt instance
-secrets: []
-      # secrets[*].kubernetesSecretKey -- kubernetesSecretKey is the name of the secret key to be created in Kubernetes secrets resource
-  # - kubernetesSecretKey: ""
-      # secrets[*].passboltSecret -- passboltSecret represents the passbolt secret to be referenced in the passbolt instance
-  #   passboltSecret:
-        # secrets[*].passboltSecret.name -- name is the name of the passbolt secret to be referenced
-  #     name: ""
-        # secrets[*].passboltSecret.field -- field is the name of the passbolt secret field to be referenced
-        # valid values are: "username", "password", "uri"
-  #     field: ""
-        # secrets[*].passboltSecret.value -- value is the plain text value of the secret.
-        # This field allows to set a static value or using go templating to generate the value.
-        # Valid template variables are:
-        #   - Password
-        #   - Username
-        #   - URI
-        # Example: "postgresql://{{ .Username }}:{{ .Password }}@{{ .URI }}"
-  #     value: ""
+passboltSecrets: {}
+  # <k8s-secret-key>:
+    # id: <passbolt-secret-id>
+    # field: <passbolt-secret-field>
+    # value: <passbolt-secret-value>
+  #
+  # Example:
+  # my-key:
+  #   id: 00000000-0000-0000-0000-000000000000
+  #   field: username
+  #   # value: mysql://{{.Username}}:{{.Password}}@{{.URI}}:3306/my-db
+
+plainTextSecrets: {}
+  # <secret-key>: <secret-value>
