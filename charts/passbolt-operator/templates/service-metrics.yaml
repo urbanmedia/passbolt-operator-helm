@@ -1,3 +1,4 @@
+{{- if .Values.monitoring.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,9 +8,10 @@ metadata:
   name: {{ include "passbolt-operator.service.metrics.name" . }}
 spec:
   ports:
-  - name: https
+  - name: metrics
     port: 8443
     protocol: TCP
-    targetPort: https
+    targetPort: metrics
   selector:
     {{- include "passbolt-operator.selectorLabels" . | nindent 4 }}
+{{- end }}
