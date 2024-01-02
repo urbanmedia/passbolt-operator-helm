@@ -55,7 +55,7 @@ jobs:
         run: |
           helm-docs --chart-search-root ./charts --document-dependency-values
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: helm-docs
           retention-days: 1
