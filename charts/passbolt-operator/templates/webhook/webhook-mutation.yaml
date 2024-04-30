@@ -14,14 +14,14 @@ webhooks:
     service:
       name: {{ include "passbolt-operator.service.webhook.name" . }}
       namespace: {{ .Release.Namespace }}
-      path: /mutate-passbolt-tagesspiegel-de-v1alpha3-passboltsecret
+      path: /mutate-passbolt-tagesspiegel-de-v1-passboltsecret
   failurePolicy: Fail
   name: mpassboltsecret.tagesspiegel.de
   rules:
   - apiGroups:
     - passbolt.tagesspiegel.de
     apiVersions:
-    - v1alpha3
+    - v1
     operations:
     - CREATE
     - UPDATE
