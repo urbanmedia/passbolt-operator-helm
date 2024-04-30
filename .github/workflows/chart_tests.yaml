@@ -59,3 +59,101 @@ jobs:
       # - name: Run chart-testing (install)
       #   if: steps.list-changed.outputs.changed == 'true'
       #   run: ct install --target-branch ${{ env.git_default_branch }}
+
+  deployment-test:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: read
+    strategy:
+      matrix:
+        include:
+          # for available k8s_versions, see https://github.com/kubernetes-sigs/kind/releases
+          - name: passbolt-operator
+            k8s_version: "1.25.11"
+            charts: charts/passbolt-operator
+          #- name: passbolt-operator
+          #  k8s_version: "1.26.14"
+          #  charts: charts/passbolt-operator
+          #- name: passbolt-operator
+          #  k8s_version: "1.27.11"
+          #  charts: charts/passbolt-operator
+          #- name: passbolt-operator
+          #  k8s_version: "1.28.7"
+          #  charts: charts/passbolt-operator
+          #- name: passbolt-operator
+          #  k8s_version: "1.29.2"
+          #  charts: charts/passbolt-operator
+    env:
+      git_default_branch: "main"
+      REGISTRY: ghcr.io
+      IMAGE_NAME: urbanmedia/example-application-git-flow
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Create k8s Kind Cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          node_image: kindest/node:v${{ matrix.k8s_version }}
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.12.1
+
+      - name: Install Prometheus Operator CRDs
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
+          helm install prometheus-operator-crds prometheus-community/prometheus-operator-crds
+
+      - name: Install cert-manager
+        run: |
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo update
+          helm install \
+            cert-manager jetstack/cert-manager \
+            --namespace cert-manager \
+            --create-namespace \
+            --set installCRDs=true \
+            --set prometheus.enabled=false \
+            --version v1.11.0
+
+      - name: Install mysql client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+
+      - name: Bootstrap cluster and passbolt instance
+        env:
+          CONTAINER_REGISTRY_HOST: ${{ env.REGISTRY }}
+          CONTAINER_REGISTRY_USERNAME: ${{ github.actor }}
+          CONTAINER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          NAMESPACE: ${{ matrix.name }}
+        run: ./.tests/bootstrap.sh
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ env.git_default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: List status of containers
+        run: |
+          docker ps -a
+
+      - name: Run chart-testing (install)
+        run: ct install --target-branch ${{ env.git_default_branch }} --charts ${{ matrix.charts }} --namespace ${{ matrix.name }} --build-id ${{ github.run_id }} --github-groups
