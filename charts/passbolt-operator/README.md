@@ -1,6 +1,6 @@
 # passbolt-operator
 
-![Version: 2.1.1](https://img.shields.io/badge/Version-2.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.0](https://img.shields.io/badge/AppVersion-v2.1.0-informational?style=flat-square)
+![Version: 2.1.2](https://img.shields.io/badge/Version-2.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.0](https://img.shields.io/badge/AppVersion-v2.1.0-informational?style=flat-square)
 
 A Helm chart to deploy the Passbolt Operator. The Passbolt Operator is a Kubernetes Operator to manage Passbolt Secrets in Kubernetes (Passbolt --> Kubernetes secret).
 
@@ -54,7 +54,6 @@ helm upgrade \
 | Name | Email | Url |
 | ---- | ------ | --- |
 | leonsteinhaeuser | <leonsteinhaeuser@gmail.com> | <https://github.com/leonsteinhaeuser> |
-| f-pietsch | <falk.pietsch@tagesspiegel.de> | <https://github.com/f-pietsch> |
 | helgebonert | <helge.bonert@tagesspiegel.de> | <https://github.com/helgebonert> |
 
 ## Requirements
