@@ -5,6 +5,9 @@
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Annotations to be added to the PassboltSecret resource
+annotations: {}
+
 # -- leaveOnDelete is a flag to indicate if the Kubernetes secret should be deleted when the
 # corresponding passbolt secret is deleted. If set to true, the secret will be deleted when
 # the passbolt secret is deleted. If set to false, the secret will not be deleted when the
