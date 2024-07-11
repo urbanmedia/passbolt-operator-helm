@@ -1,6 +1,6 @@
 # passbolt-secret
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.0](https://img.shields.io/badge/AppVersion-v2.1.0-informational?style=flat-square)
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.0](https://img.shields.io/badge/AppVersion-v2.1.0-informational?style=flat-square)
 
 A Helm chart for setting up a passbolt secret in Kubernetes
 
@@ -37,6 +37,7 @@ helm install \
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| annotations | object | `{}` | Annotations to be added to the PassboltSecret resource |
 | fullnameOverride | string | `""` |  |
 | leaveOnDelete | bool | `false` | leaveOnDelete is a flag to indicate if the Kubernetes secret should be deleted when the corresponding passbolt secret is deleted. If set to true, the secret will be deleted when the passbolt secret is deleted. If set to false, the secret will not be deleted when the passbolt secret is deleted. |
 | nameOverride | string | `""` |  |
