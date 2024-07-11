@@ -358,6 +358,35 @@ entries:
   passbolt-secret:
   - apiVersion: v2
     appVersion: v2.1.0
+    created: "2024-07-11T08:59:04.014515648Z"
+    description: A Helm chart for setting up a passbolt secret in Kubernetes
+    digest: acda9fd31f14865970551f916a5bf24fadfe8d14836692c4180470faa4386230
+    home: https://github.com/urbanmedia/passbolt-operator
+    keywords:
+    - passbolt
+    - operator
+    - passbolt-operator
+    - secrets
+    - password
+    maintainers:
+    - email: leonsteinhaeuser@gmail.com
+      name: leonsteinhaeuser
+      url: https://github.com/leonsteinhaeuser
+    - email: falk.pietsch@tagesspiegel.de
+      name: f-pietsch
+      url: https://github.com/f-pietsch
+    - email: helge.bonert@tagesspiegel.de
+      name: helgebonert
+      url: https://github.com/helgebonert
+    name: passbolt-secret
+    sources:
+    - https://github.com/urbanmedia/passbolt-operator
+    type: application
+    urls:
+    - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-secret-2.2.0/passbolt-secret-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
+    appVersion: v2.1.0
     created: "2024-03-01T12:43:28.285998492Z"
     description: A Helm chart for setting up a passbolt secret in Kubernetes
     digest: d0334096a3c0c121f7eba1e06de2ca371774bd6e6c6e7fc2ce976cef707d8eae
@@ -505,4 +534,4 @@ entries:
     urls:
     - https://github.com/urbanmedia/passbolt-operator-helm/releases/download/passbolt-secret-0.1.0/passbolt-secret-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-03T12:48:25.209333625Z"
+generated: "2024-07-11T08:59:04.014583996Z"
