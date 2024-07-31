@@ -1,0 +1,3 @@
+# folders generated during CI pipeline
+_data/
+docker-compose.yaml
